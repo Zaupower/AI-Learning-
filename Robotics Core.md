@@ -1,210 +1,100 @@
-# Robot Learning / RL — Study Guide
+# Robotics Core — Study Guide
 
-Three resources: CS285 (deep RL theory), CS224R (practical robot learning), LeRobot tutorial (hands-on bridge to real hardware).
+Two courses taken in parallel: one geometric/model-based (Tedrake), one classical mechanics (Lynch & Park).
 
 ---
 
-## Berkeley CS285: Deep Reinforcement Learning (Sergey Levine, Fall 2023)
+## MIT 6.4210: Robotic Manipulation (Russ Tedrake)
 
-The canonical graduate deep RL course. Levine's group (RAIL lab) produced much of the robot learning literature. Covers imitation learning, policy gradients, Q-learning, model-based RL, offline RL, exploration, inverse RL, and sequence models.
+The single best manipulation course. Geometric pose estimation, grasping, motion planning, deep-learning-based manipulation, deformable objects. Updated every year, full interactive notes, Colab problem sets in Drake.
 
-- **Course site (current):** [rail.eecs.berkeley.edu/deeprlcourse](https://rail.eecs.berkeley.edu/deeprlcourse/)
-- **Fall 2023 site (best self-study version):** [rail.eecs.berkeley.edu/deeprlcourse-fa23](https://rail.eecs.berkeley.edu/deeprlcourse-fa23/)
-- **YouTube (Fall 2023):** [CS285 Fall 2023 playlist](https://www.youtube.com/playlist?list=PL_iWQOsE6TfVYGEGiAOMaOzzv41Jfm_Ps)
-- **Syllabus:** [rail.eecs.berkeley.edu/deeprlcourse-fa23/syllabus](https://rail.eecs.berkeley.edu/deeprlcourse-fa23/syllabus/)
-- **Community discussion:** [reddit.com/r/berkeleydeeprlcourse](https://reddit.com/r/berkeleydeeprlcourse/)
-- **Textbook (companion):** Sutton & Barto, *Reinforcement Learning: An Introduction* — [free online](http://incompleteideas.net/book/the-book-2nd.html)
+- **Course notes (HTML, main version):** [manipulation.csail.mit.edu](https://manipulation.csail.mit.edu/)
+- **Fall 2025 offering:** [manipulation.csail.mit.edu/Fall2025](https://manipulation.csail.mit.edu/Fall2025/)
+- **PDF version:** [github.com/RussTedrake/manipulation/releases](https://github.com/RussTedrake/manipulation/releases)
+- **MIT OCW (Fall 2022, with lecture videos):** [ocw.mit.edu/courses/6-4210](https://ocw.mit.edu/courses/6-4210-robotic-manipulation-fall-2022/)
+- **Code repo:** [github.com/RussTedrake/manipulation](https://github.com/RussTedrake/manipulation)
+- **Drake (simulator/toolbox used throughout):** [drake.mit.edu](https://drake.mit.edu/)
+- **Fall 2022 Lecture 1 (YouTube):** [Watch](https://www.youtube.com/watch?v=QlrRb7X4JvA)
 
 ### Prerequisites
 
-Basic ML (MDPs, neural networks, gradient descent), probability, linear algebra, Python/PyTorch. If you did CS231n, you're set.
+Linear algebra, basic probability, Python. No robotics experience required. Tedrake recommends brushing up on:
+- Linear algebra: [MIT 18.06 (Gilbert Strang, OCW)](https://ocw.mit.edu/courses/mathematics/18-06-linear-algebra-spring-2010/)
+- Convex optimization (optional): [Boyd lectures (YouTube)](https://youtube.com/playlist?list=PL3940DD956CDF0622), [textbook (free)](https://web.stanford.edu/~boyd/cvxbook/)
 
-### Lectures → Homework Mapping
+### Chapters & Topics
 
-5 homeworks, each with theory and implementation (MuJoCo environments). Below is the full schedule.
+Work through the HTML notes chapter by chapter. Each has exercises at the end — these are the problem sets.
 
-**HW1: Imitation Learning** — do after Lectures 1–3
+| Ch | Title | Topics | Link |
+|----|-------|--------|------|
+| 1 | Introduction | What is manipulation, open-world manipulation, simulation, model-based design | [Read](https://manipulation.csail.mit.edu/intro.html) |
+| 2 | Let's Get You a Robot | URDF/SDF, arms (position vs torque control), grippers, sensors, HardwareStation in Drake | [Read](https://manipulation.csail.mit.edu/robot.html) |
+| 3 | Basic Pick and Place | Spatial transforms, forward kinematics, Jacobians, differential IK, grasp/pre-grasp poses, trajectories | [Read](https://manipulation.csail.mit.edu/pick.html) |
+| 4 | Geometric Pose Estimation | Cameras, depth sensors, point clouds, ICP, outlier handling, segmentation, tracking | [Read](https://manipulation.csail.mit.edu/pose.html) |
+| 5 | Bin Picking | Cluttered scenes, contact/friction, static equilibrium, model-based grasp selection, grasp from point clouds, state machines, LLMs for task planning | [Read](https://manipulation.csail.mit.edu/clutter.html) |
+| 6 | Motion Planning | Inverse kinematics, trajectory optimization, RRT, PRM, Graphs of Convex Sets (GCS), time-optimal paths | [Read](https://manipulation.csail.mit.edu/trajectories.html) |
+| 7 | Mobile Manipulation | Active perception, wheeled/legged robots, navigation, mapping | [Read](https://manipulation.csail.mit.edu/mobile.html) |
+| 8 | Manipulator Control | Trajectory tracking, force control, impedance/stiffness control, operational space control, peg-in-hole | [Read](https://manipulation.csail.mit.edu/force.html) |
+| 9 | Object Detection & Segmentation | Crowd-sourced datasets, fine-tuning, synthetic data, self-supervised learning, large-scale models | [Read](https://manipulation.csail.mit.edu/segmentation.html) |
+| 10 | Deep Perception for Manipulation | Learned pose estimation, grasp selection, semantic keypoints, dense correspondences, scene flow | [Read](https://manipulation.csail.mit.edu/deep_perception.html) |
+| 11 | Reinforcement Learning | Policy gradients, value-based methods, model-based RL for manipulation | [Read](https://manipulation.csail.mit.edu/rl.html) |
+| 12 | Soft Robots & Tactile Sensing | Soft hardware, soft-body simulation, visuotactile sensing (GelSight etc.), perception and control with touch | [Read](https://manipulation.csail.mit.edu/tactile.html) |
 
-| # | Lecture | Topics | Slides |
-|---|---------|--------|--------|
-| 1 | Introduction and Course Overview | What is RL, why deep RL, course structure | [PDF](https://rail.eecs.berkeley.edu/deeprlcourse-fa23/deeprlcourse-fa23/static/slides/lec-1.pdf) |
-| 2 | Supervised Learning of Behaviors | Behavioral cloning, DAgger, distribution shift | [PDF](https://rail.eecs.berkeley.edu/deeprlcourse-fa23/deeprlcourse-fa23/static/slides/lec-2.pdf) |
-| 3 | PyTorch Tutorial | Practical PyTorch for RL | [PDF](https://rail.eecs.berkeley.edu/deeprlcourse-fa23/deeprlcourse-fa23/static/slides/lec-3.pdf) |
+### Priority for your cloth project
 
-→ **[Homework 1: Imitation Learning](https://rail.eecs.berkeley.edu/deeprlcourse-fa23/deeprlcourse-fa23/static/homeworks/hw1.pdf)** — Behavioral cloning + DAgger
-
----
-
-**HW2: Policy Gradients** — do after Lectures 4–6
-
-| # | Lecture | Topics | Slides |
-|---|---------|--------|--------|
-| 4 | Introduction to Reinforcement Learning | MDPs, reward, return, RL objective | [PDF](https://rail.eecs.berkeley.edu/deeprlcourse-fa23/deeprlcourse-fa23/static/slides/lec-4.pdf) |
-| 5 | Policy Gradients | REINFORCE, baselines, variance reduction | [PDF](https://rail.eecs.berkeley.edu/deeprlcourse-fa23/deeprlcourse-fa23/static/slides/lec-5.pdf) |
-| 6 | Actor-Critic Algorithms | Advantage estimation, GAE, A2C | [PDF](https://rail.eecs.berkeley.edu/deeprlcourse-fa23/deeprlcourse-fa23/static/slides/lec-6.pdf) |
-
-→ **[Homework 2: Policy Gradients](https://rail.eecs.berkeley.edu/deeprlcourse-fa23/deeprlcourse-fa23/static/homeworks/hw2.pdf)** — REINFORCE, baselines, GAE
-
----
-
-**HW3: Q-Learning and Actor-Critic** — do after Lectures 7–10
-
-| # | Lecture | Topics | Slides |
-|---|---------|--------|--------|
-| 7 | Value Function Methods | Fitted value iteration, convergence | [PDF](https://rail.eecs.berkeley.edu/deeprlcourse-fa23/deeprlcourse-fa23/static/slides/lec-7.pdf) |
-| 8 | Deep RL with Q-Functions | DQN, double Q-learning, SAC | [PDF](https://rail.eecs.berkeley.edu/deeprlcourse-fa23/deeprlcourse-fa23/static/slides/lec-8.pdf) |
-| 9 | Advanced Policy Gradients | Natural gradients, TRPO, PPO | [PDF](https://rail.eecs.berkeley.edu/deeprlcourse-fa23/deeprlcourse-fa23/static/slides/lec-9.pdf) |
-| 10 | Optimal Control and Planning | LQR, iLQR, MPC, random shooting, CEM | [PDF](https://rail.eecs.berkeley.edu/deeprlcourse-fa23/deeprlcourse-fa23/static/slides/lec-10.pdf) |
-
-→ **[Homework 3: Q-Learning and Actor-Critic](https://rail.eecs.berkeley.edu/deeprlcourse-fa23/deeprlcourse-fa23/static/homeworks/hw3.pdf)** — DQN, DDQN, Actor-Critic, SAC
+Chapters 1–6 are core — do all of them with exercises. Chapter 8 (control) matters for real hardware. Chapters 9–10 (deep perception) are directly relevant to perceiving crumpled garments. Chapter 11 (RL) bridges to CS285. Chapter 12 (tactile) is bonus but interesting for cloth grasping.
 
 ---
 
-**HW4: Model-Based RL** — do after Lectures 11–12
+## Modern Robotics (Lynch & Park, Northwestern)
 
-| # | Lecture | Topics | Slides |
-|---|---------|--------|--------|
-| 11 | Model-Based Reinforcement Learning | Learning dynamics models, planning with learned models | [PDF](https://rail.eecs.berkeley.edu/deeprlcourse-fa23/deeprlcourse-fa23/static/slides/lec-11.pdf) |
-| 12 | Model-Based Policy Learning | Dyna, model-based policy optimization, world models | [PDF](https://rail.eecs.berkeley.edu/deeprlcourse-fa23/deeprlcourse-fa23/static/slides/lec-12.pdf) |
+Kinematics, dynamics, screw theory, control. The mathematical backbone. Free textbook, free videos, free software.
 
-→ **[Homework 4: Model-Based RL](https://rail.eecs.berkeley.edu/deeprlcourse-fa23/deeprlcourse-fa23/static/homeworks/hw4.pdf)**
+- **Textbook (free preprint PDF):** [modernrobotics.northwestern.edu](https://modernrobotics.northwestern.edu/)
+- **Wiki + all resources:** [hades.mech.northwestern.edu/Modern_Robotics](https://hades.mech.northwestern.edu/index.php/Modern_Robotics)
+- **YouTube (all videos, one playlist):** [Modern Robotics playlist](https://www.youtube.com/playlist?list=PLggLP4f-rq02vX0OQQ5vrCxbJrzamYDfx)
+- **Software (Python/MATLAB):** [github.com/NxRLab/ModernRobotics](https://github.com/NxRLab/ModernRobotics)
+- **Cambridge University Press page:** [cambridge.org/Modern-Robotics](https://www.cambridge.org/core/books/modern-robotics/57C3BB1C6D5CB40320FA96E5FA3BCEC6)
 
----
+### What to cover
 
-**HW5: Exploration and Offline RL** — do after Lectures 13–16
+Lynch himself skips Chapters 7, 10, and 12 in his own class. Focus on:
 
-| # | Lecture | Topics | Slides |
-|---|---------|--------|--------|
-| 13 | Exploration (Part 1) | Count-based, curiosity-driven, information gain | [PDF](https://rail.eecs.berkeley.edu/deeprlcourse-fa23/deeprlcourse-fa23/static/slides/lec-13.pdf) |
-| 14 | Exploration (Part 2) | Posterior sampling, unsupervised RL | [PDF](https://rail.eecs.berkeley.edu/deeprlcourse-fa23/deeprlcourse-fa23/static/slides/lec-14.pdf) |
-| 15 | Offline RL (Part 1) | Batch RL, distribution shift in offline setting, CQL | [PDF](https://rail.eecs.berkeley.edu/deeprlcourse-fa23/deeprlcourse-fa23/static/slides/lec-15.pdf) |
-| 16 | Offline RL (Part 2) | IQL, decision transformers, offline-to-online | [PDF](https://rail.eecs.berkeley.edu/deeprlcourse-fa23/deeprlcourse-fa23/static/slides/lec-16.pdf) |
-
-→ **[Homework 5: Exploration and Offline RL](https://rail.eecs.berkeley.edu/deeprlcourse-fa23/deeprlcourse-fa23/static/homeworks/hw5.pdf)**
-
----
-
-**Remaining lectures (no homework — watch for depth)**
-
-| # | Lecture | Topics | Slides |
-|---|---------|--------|--------|
-| 17 | RL Theory Basics | Sample complexity, PAC bounds | [PDF](https://rail.eecs.berkeley.edu/deeprlcourse-fa23/deeprlcourse-fa23/static/slides/lec-17.pdf) |
-| 18 | Variational Inference and Generative Models | VAEs, flow models, connection to RL | [PDF](https://rail.eecs.berkeley.edu/deeprlcourse-fa23/deeprlcourse-fa23/static/slides/lec-18.pdf) |
-| 19 | Connection between Inference and Control | Control as inference, MaxEnt RL, soft optimality | [PDF](https://rail.eecs.berkeley.edu/deeprlcourse-fa23/deeprlcourse-fa23/static/slides/lec-19.pdf) |
-| 20 | Inverse Reinforcement Learning | Learning reward functions from demonstrations | [PDF](https://rail.eecs.berkeley.edu/deeprlcourse-fa23/deeprlcourse-fa23/static/slides/lec-20.pdf) |
-| 21 | RL with Sequence Models | Decision transformers, trajectory transformers | [PDF](https://rail.eecs.berkeley.edu/deeprlcourse-fa23/deeprlcourse-fa23/static/slides/lec-21.pdf) |
-| 22 | Meta-Learning and Transfer Learning | MAML, few-shot adaptation, transfer | [PDF](https://rail.eecs.berkeley.edu/deeprlcourse-fa23/deeprlcourse-fa23/static/slides/lec-22.pdf) |
-| 23 | Challenges and Open Problems | Frontiers of deep RL | [PDF](https://rail.eecs.berkeley.edu/deeprlcourse-fa23/deeprlcourse-fa23/static/slides/lec-23.pdf) |
-
-> **For your cloth project:** Lectures 2 (imitation/behavioral cloning), 15–16 (offline RL), 18–19 (generative models / inference-as-control), and 21 (sequence models / decision transformers) are the most directly relevant. Diffusion Policy and VLA models build on exactly these ideas.
-
----
-
-## Stanford CS224R: Deep Reinforcement Learning (Chelsea Finn, Spring 2025)
-
-Complementary to CS285. More focused on the practical robot-learning stack: learning from demonstrations, learning from high-dimensional observations, offline datasets, goal-conditioned RL, meta-RL. Finn co-founded Physical Intelligence (π0).
-
-- **Course site:** [cs224r.stanford.edu](https://cs224r.stanford.edu/)
-- **YouTube playlist (Spring 2025):** [CS224R Spring 2025](https://www.youtube.com/playlist?list=PLoROMvodv4rPwxE0ONYRa_itZFdaKCylL)
-- **Stanford Bulletin description:** [bulletin.stanford.edu/courses/2242591](https://bulletin.stanford.edu/courses/2242591)
-
-### Structure
-
-3 homeworks + midterm + project. Lectures cover:
-
-- Imitation learning and behavioral cloning
-- Policy gradient methods (REINFORCE, PPO)
-- Off-policy actor-critic (SAC)
-- Model-based RL
-- Offline RL
-- Goal-conditioned RL
-- Meta-RL and multi-task RL
-- Unsupervised skill discovery
-- RL from human feedback (RLHF)
-- Frontiers (VLAs, foundation models for robotics)
-
-### How CS224R differs from CS285
-
-CS285 is broader and more theoretical — it covers the full RL algorithm landscape. CS224R is more applied and robot-focused — it centers on the paradigms you'd actually use to get a policy onto hardware (behavior cloning, diffusion policies, VLA fine-tuning, offline RL from demonstrations). If you can only do one, do CS285 first for the foundations. If you can do both, CS224R second.
-
----
-
-## Hugging Face LeRobot: Robot Learning Tutorial
-
-The fastest bridge from "took CS285" to "trained a policy on a real arm." Comprehensive guide aimed at researchers and practitioners.
-
-- **Full tutorial (PDF/interactive):** [huggingface.co/spaces/lerobot/robot-learning-tutorial](https://huggingface.co/spaces/lerobot/robot-learning-tutorial)
-- **Course (simplified, unit-based):** [huggingface.co/learn/robotics-course](https://huggingface.co/learn/robotics-course/en/unit0/1)
-- **LeRobot repo:** [github.com/huggingface/lerobot](https://github.com/huggingface/lerobot)
-- **T-shirt folding experiment:** referenced in the LeRobot repo — an end-to-end demonstration of folding t-shirts
-
-### What LeRobot covers
-
-- Classical robotics foundations vs learning-based approaches
-- LeRobotDataset format (synchronized video + state/action in Parquet)
-- Imitation learning, reinforcement learning, and VLA models — all implemented in pure PyTorch
-- Deployment on real hardware (SO-100/SO-101, ALOHA/ALOHA-2)
-- Thousands of community robotics datasets on Hugging Face Hub
-
-### Supported policies
-
-LeRobot implements state-of-the-art policies including ACT, Diffusion Policy, TDMPC, VQ-BeT, and Pi0 — the exact algorithms you'll need for cloth manipulation.
-
-### Hardware it supports
-
-| Robot | Cost | Type |
-|-------|------|------|
-| SO-100 / SO-101 | ~$150–300 | 3D-printable single arm |
-| ALOHA / ALOHA-2 | ~$10k+ | Bimanual teleoperation system |
+| Ch | Title | Topics | Priority |
+|----|-------|--------|----------|
+| 2–3 | Configuration Space & Rigid-Body Motions | Degrees of freedom, rotation matrices, SO(3), homogeneous transforms, screws | Core |
+| 4 | Forward Kinematics | Product of exponentials formula | Core |
+| 5 | Velocity Kinematics & Statics | Jacobians, manipulability, statics | Core |
+| 6 | Inverse Kinematics | Analytical and numerical IK | Core |
+| 8 | Dynamics of Open Chains | Newton-Euler, Lagrangian, mass matrix, forward/inverse dynamics | Core |
+| 9 | Trajectory Generation | Point-to-point, polynomial, time scaling | Useful |
+| 11 | Robot Control | PID, computed torque, force control, impedance control | Useful |
+| 13 | Wheeled Mobile Robots | Kinematics, motion planning | Optional |
 
 ### How to use it
 
-1. Read the full tutorial PDF (not the simplified course) after completing CS285
-2. Install LeRobot, load a dataset, visualize episodes
-3. Train a Diffusion Policy or ACT on a sim environment
-4. If you have an SO-101: teleoperate, record demonstrations, train, deploy
-5. Iterate toward your cloth task
+Watch the videos (short, 5–15 min each, Lightboard format) before reading the chapter. Do the end-of-chapter exercises. Use the Python library to verify your solutions computationally.
 
 ---
 
-## NVIDIA Physical AI Learning (do alongside, not sequential)
+## Optional: Underactuated Robotics (Russ Tedrake)
 
-Short modules, not full courses. Treat as documentation-with-exercises.
+Deeper control theory — nonlinear dynamics, Lyapunov analysis, trajectory optimization, LQR, model predictive control. Not required for cloth manipulation (perception and policy dominate), but excellent if you want a stronger controls foundation.
 
-- **All modules:** [docs.nvidia.com/learning/physical-ai](https://docs.nvidia.com/learning/physical-ai/)
-
-| Module | Time | What you get |
-|--------|------|--------------|
-| Building Your First Robot in Isaac Sim | 2–3 hrs | Isaac Sim interface, physics, sensors, first simulation |
-| Isaac Lab: RL Training | 3–4 hrs | GPU-accelerated parallel RL, policy training |
-| SO-101 Sim-to-Real with GR00T | 6–10 hrs | Configure robot, teleoperate demos, post-train GR00T policy, deploy to real hardware, close sim-to-real gap |
-| GR00T Humanoid Manipulation | 4–12 hrs | GR00T reference workflow, Isaac Lab-Arena, Jetson Thor |
-
-> The SO-101 sim-to-real module is the most relevant. It's literally your pipeline minus the cloth.
+- **Course notes:** [underactuated.csail.mit.edu](https://underactuated.csail.mit.edu/)
+- **MIT OCW:** [ocw.mit.edu/courses/6-832](https://ocw.mit.edu/courses/6-832-underactuated-robotics-spring-2009/)
 
 ---
 
 ## Suggested sequencing
 
 ```
-Weeks 1–3:  CS285 Lectures 1–8 + HW1–HW2
-            (imitation learning, policy gradients, actor-critic, Q-learning)
-
-Weeks 4–5:  CS285 Lectures 9–12 + HW3–HW4
-            (advanced PG, model-based RL)
-            Start NVIDIA Isaac Sim basics module alongside
-
-Weeks 6–7:  CS285 Lectures 13–16 + HW5
-            (exploration, offline RL)
-            Start CS224R playlist
-
-Weeks 8–9:  CS285 Lectures 17–23 (no HW, watch for depth)
-            Continue CS224R
-            Read LeRobot tutorial PDF
-
-Week 10+:   LeRobot hands-on with SO-101 hardware
-            NVIDIA SO-101 sim-to-real module
-            → Transition to papers (see Roadmap)
+Week 1–2:   Modern Robotics Ch 2–6 (kinematics) + Tedrake Ch 1–2 (setup)
+Week 3–4:   Modern Robotics Ch 8–9 (dynamics) + Tedrake Ch 3–4 (pick-and-place, pose estimation)
+Week 5–6:   Modern Robotics Ch 11 (control) + Tedrake Ch 5–6 (bin picking, motion planning)
+Week 7–8:   Tedrake Ch 8–10 (control, detection, deep perception)
+Week 9:     Tedrake Ch 11–12 (RL, tactile) — bridges to CS285
 ```
 
-This is 10 weeks at ~15–20 hrs/week, overlapping with the Robotics Core stage.
+This pairs well with running CS285 in parallel starting around Week 3–4.
