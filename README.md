@@ -147,3 +147,5 @@ Both the HF LeRobot course and NVIDIA's sim-to-real course use the SO-101 arm. G
 - **SO-101 arm:** ~$150–300, 3D-printable
 - **Camera:** Intel RealSense D435 or ZED Mini (RGB-D)
 - **Later upgrade:** UR5e or xArm for serious work, ideally two arms (bimanual)
+
+> **CS231A: Computer Vision, From 3D Reconstruction to Recognition** ([syllabus](https://web.stanford.edu/class/cs231a/syllabus.html)) — Classical/geometric computer vision: camera models, calibration, stereo, depth estimation, structure from motion, optical flow, tracking. Pick it up if you're building a custom perception stack and find Tedrake's Chapter 4 insufficient for your depth/point-cloud pipeline.
